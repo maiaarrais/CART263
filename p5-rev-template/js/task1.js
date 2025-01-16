@@ -5,17 +5,19 @@ function setup() {
 
   background(0);
   
-  let c1 = color(159, 43, 104)
+  let r, g, b;
 
-  fill(c1);
+  r = 159;
+  g = 43
+  b = 104;
+
+  fill(r,g,b);
   ellipse(30, 30, 30);
 
-  let c2 = color(218, 112, 214);
-  fill(c2);
+  fill(r+59, g+69, b+110);
   ellipse (60, 60, 40);
 
-  let c3 = color(255, 0, 255);
-  fill(c3);
+  fill(r+96, g-43, b+96);
   ellipse (100, 100, 50);
 
 }
