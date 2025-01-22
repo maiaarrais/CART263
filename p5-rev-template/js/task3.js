@@ -15,9 +15,6 @@ b1 = 166;
 b2 = 0;
 b3 = 57;
 
-
-
-
 function setup(){
     createCanvas(400, 400);
 
