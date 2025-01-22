@@ -52,7 +52,7 @@ function movingSquare(){
 }
 
 function keyPressed(){
-    if (keyCode === 32){
+    if (keyCode === ''){
         x2+=20;
         y2+=15;
     }
