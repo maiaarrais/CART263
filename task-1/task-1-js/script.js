@@ -7,50 +7,119 @@ console.log("we are a go!")
 /*** START PART ONE ACCESS */ 
 /* 1: all paragraph elements */
 /***CODE */
+console.log(document.getElementsByTagName("p"));
 /***OUTPUT: 
  * 
+[Log] HTMLCollection (9) (script.js, line 10)
+0 
+<p id="1">…</p>
+1 
+<p id="2" class="img-descript">…</p>
+2 
+<p id="3" class="img-descript">…</p>
+3 
+<p id="4" class="img-descript">…</p>
+4 
+<p id="5" class="img-descript">…</p>
+5 
+<p id="6" class="img-descript">…</p>
+6 
+<p id="7" class="img-descript">…</p>
+7 
+<p id="8" class="img-descript">…</p>
+8 
+<p id="9" class="img-descript">…</p>
+
+HTMLCollection Prototype
+
+
  */
 
 
 /*************************************** */
 /* 2: only the first paragraph element */
 /***CODE */
+console.log(document.getElementById("1"));
+// or get element by tag name and [0]
 /***OUTPUT: 
- * 
+ 
+ * [Log] <p id="1">…</p> (script.js, line 21)
  */
 
 
 /*************************************** */
 /* 3: all elements with the class inner-container */
 /***CODE */
+console.log(document.getElementsByClassName("inner-container"));
 /***OUTPUT: 
- * 
+ * [Log] HTMLCollection (8) (script.js, line 53)
+0 
+<div class="inner-container">…</div>
+1 
+<div class="inner-container">…</div>
+2 
+<div class="inner-container">…</div>
+3 
+<div class="inner-container">…</div>
+4 
+<div class="inner-container">…</div>
+5 
+<div class="inner-container">…</div>
+6 
+<div class="inner-container">…</div>
+7 
+<div class="inner-container">…</div>
+
+HTMLCollection Prototype
+
  */
 
 
 /*************************************** */
 /* 4: the last image element inside the element that has the class img-container */
 /***CODE */
+console.log(document.getElementsByClassName("inner-container")[7]);
 /***OUTPUT: 
- * 
- */
-
+[Log] <div class="inner-container"> (script.js, line 81)
+<div class="content-container">…</div>
+</div>
 
 /*************************************** */
 /* 5A: all h2 elements */
+console.log(document.getElementsByTagName("h2"));
 /* 5B: length of the list in 5A */
+console.log(document.getElementsByTagName("h2").length);
 /* 5C: the text content of the first element in the list from 5A */
+console.log(document.getElementsByTagName("h2")[0].textContent);
 /***CODE */
 /***OUTPUT: 
- * 
+ * [Log] HTMLCollection (1) (script.js, line 89)
+0 
+<h2> The header of this fancy page</h2>
+
+[Log] 1 (script.js, line 91)
+
+[Log]  The header of this fancy page (script.js, line 93)
+
  */
 
 
 /*************************************** */
 /* 6: the element with id name parent */
 /***CODE */
+console.log(document.getElementById("parent"));
 /***OUTPUT: 
- * 
+ * [Log] <section id="parent"> (script.js, line 110)
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+<div class="inner-container">…</div>
+</section>
+
  */
 
 /*************************************** */
@@ -62,6 +131,7 @@ console.log("we are a go!")
 /*************************************** */
 /* 1: Select the first paragraph and replace the text within the paragraph... */
 /***CODE */
+document.getElementById("1").innerHTML = "New text in paragraph one: text changed by Maia Arrais on the following date: Jan 27, 2025.";
 /*************************************** */
 /* 2: Select all elements in the HTML that have the class name content-container
  and change the background color ... of first and second ...*/
