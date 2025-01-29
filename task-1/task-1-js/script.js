@@ -136,25 +136,44 @@ document.getElementById("1").innerHTML = "New text in paragraph one: text change
 /* 2: Select all elements in the HTML that have the class name content-container
  and change the background color ... of first and second ...*/
 /***CODE */
+let elements = document.getElementsByClassName("content-container");
 
+for (let i = 0; i < elements.length; i++) {
+    if (i === 0) {
+        elements[i].style.background = 'orange'; 
+    } else if (i === 1) {
+        elements[i].style.background = 'purple'; 
+    }
+}
 /*************************************** */
 /* 3: Change the src element of the first image element on the page to be ...
 /***CODE */
-
+document.querySelectorAll("img")[0].setAttribute("src","task-1-images/seven.png");
 /*************************************** */
 /* 4: Select the third paragraph element on the page and 
 replace the content (within the paragraph) to be an h2 element which contains the text `TEST 123`
 /***CODE */
-
+document.querySelectorAll("p")[2].innerHTML = "<h2>TEST 123</h2>"
 /*************************************** */
 /* 5: Select the fourth paragraph element on the page and 
 add to the existing content an h2 element containing the text `TEST 123`
 /***CODE */
+let newH2 = document.createElement("h2");
+newH2.innerHTML = "TEST 123"; // Set the content for the new <h2>
 
+let pElement = document.querySelectorAll("p")[3]; // Get the 4th <p> element
+pElement.appendChild(newH2); // Append the new <h2> to the 4th <p> element
 /*************************************** */
 /* 6: Select the fifth paragraph element on the page and add to the existing content 
 an img element that holds `one.png`, and add the class newStyle to said paragraph element.
 /***CODE */
+let newElement = document.createElement("img");
+newElement.setAttribute("src","task-1-images/one.png");
+
+let imgSrc = document.querySelectorAll("p")[4];
+imgSrc.appendChild(newElement); 
+imgSrc.classList.add("newStyle");
+console.log(document.getElementById('5'))
 
 
 /*************************************** */
