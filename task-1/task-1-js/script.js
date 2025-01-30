@@ -251,11 +251,45 @@ allPTagsThree.forEach(paragraph => {
     otherwise lat it have the content `ODD`.*/
 
 /***CODE */
+function customNewBoxCreate(parent){
+   let newDiv = document.createElement("div");
+   newDiv.classList.add('testDiv');
+   parent.appendChild(newDiv)
+   return newDiv;
+}
+
+let parentElement = document.getElementById('new-grid');
+
+for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
+        let returnedDiv = customNewBoxCreate(parentElement);
+        returnedDiv.style.position = 'absolute';
+        returnedDiv.style.left = `${col * 40}px`; // Adjusting the position based on column index
+        returnedDiv.style.top = `${row * 40}px`;
+         // BONUS I 
+         if (row % 2 === 0) { //even 
+            returnedDiv.style.backgroundColor = 'white'; 
+        } else {
+            returnedDiv.style.backgroundColor = 'purple'; 
+        }
+
+        //BONUS II 
+        if (row % 2 === 0) {
+            returnedDiv.innerText = 'EVEN'; 
+        } else {
+            returnedDiv.innerText = 'ODD'; 
+        }
+    
+    }
+    
+}
 
 
 /***EXPLANATION::
- * 
- * 
+ * creating a new div: customNewBoxCreate() with the class testDiv for elements with new-grid id
+ * for each combination of rows and columns a new div is created by calling customNewBoxCreate()
+ * left and right positions are calculated based on the index (col * 40px) & (row * 40px)
+ * even row  (row % 2 === 0) set to white and write even else purple and odd. 
  */
 
 /*************************************** */
@@ -275,9 +309,32 @@ allPTagsThree.forEach(paragraph => {
 /***CODE */
 
 
+ let pElement = document.getElementById('new-grid-three');
+ for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
+        let returnedDiv = customNewBoxCreate(pElement);
+        returnedDiv.style.position = 'absolute';
+        returnedDiv.style.left = `${col * 40}px`; // Adjusting the position based on column index
+        returnedDiv.style.top = `${row * 40}px`;
+    if (col % 3 === 0){
+        returnedDiv.style.backgroundColor = "red";
+        returnedDiv.textContent = "0"
+    }
+    else if (col % 3 === 1){
+        returnedDiv.style.backgroundColor = "orange";
+        returnedDiv.textContent = "1"
+    }
+    else if(col % 3 === 2){
+        returnedDiv.style.backgroundColor = "yellow";
+        returnedDiv.textContent = "2"
+    }
+  }
+ }
 /***EXPLANATION::
- * 
- * 
+ * new grid of div elements within the new-grid-three parent element
+ * customNewBoxCreate() function to create each div inside the grid, added as children to the new-grid-three container.
+ * same setup for rows and columns as exercise 2 
+ * handling column divisions for specific attributes with (col % 3 === 0) (col % 3 === 1) (col % 3 === 2) and .textContent to write the specific number. 
  */
 
 /*************************************** */
