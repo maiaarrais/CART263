@@ -2,10 +2,30 @@ window.onload = setup;
 
 function setup(){
     // console.log("events!")
+
     let introSection = document.querySelector("#intro");
     // console.log(introSection)
 
     introSection.addEventListener("click",clickCallback);
+
+    document.querySelector("#bubbleButton").addEventListener("click", bubbleCallback)
+        console.log("button clicked");
+
+function bubbleCallback(){
+    console.log("button clicked");
+     //<< CREATE A NEW ELEMENT ON THE FLY >>>
+     let bubble =  document.createElement("div");
+     bubble.classList.add("bubble");
+     bubble.style.left = `${Math.random()*(window.innerWidth-200) }px`;
+     bubble.style.top = `${Math.random()* (window.innerHeight-200) }px`;
+
+     let r = Math.ceil(Math.random()*255); //new Math.ceil
+     let g =Math.ceil(Math.random()*255);
+     let b = Math.ceil(Math.random()*255);
+
+     bubble.style.background = `rgba(${r},${g},${b})`;
+     document.getElementById("top-layer").appendChild(bubble)
+}
 
     function clickCallback(e){
         let cssObj = window.getComputedStyle(this, null);
