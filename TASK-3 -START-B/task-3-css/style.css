@@ -101,6 +101,28 @@ body{
     background:rgba(246, 15, 142,1.0);
   }
 
+/* Team B CSS**/
+
+  .TEAM_B_box{
+    width: 36px; 
+    height: 25px;
+    background-color: aquamarine;
+    position: absolute; 
+    color: black;
+    text-align: center;
+    padding-top: 4px;
+    font-size: 12px;
+    margin: 4px;
+
+  }
+
+  .TEAM_B_rect{
+  background-color: rgb(30, 180, 155);
+  position:absolute;
+  color:black;
+  transform: translate(-50%, -50%);
+  }
+
 /*CSS TEAM H**/
 
 .TEAM_H_box{

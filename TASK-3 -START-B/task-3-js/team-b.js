@@ -91,7 +91,59 @@ function setup_B() {
 
   function aniA(parentCanvas) {
     console.log("in A");
+    //create a button element
+    let button = document.createElement("div");
+    button.classList.add("TEAM_B_box");
+    button.textContent = "CLICK";
+    parentCanvas.appendChild(button);
+
+    //call to setup the animation before running
+    // setupAnimation();
+
+    let rectPs = []; //empty array of circles
+
+    //offset
+    let offset = 40;
+
+    // function setupAnimation() {
+    //making the grid 
+    for (let i = 0; i < 13; i++) {
+      for (let j = 0; j < 13; j++) {
+        let rectP = document.createElement("p");
+        rectP.classList.add("TEAM_B_rect");
+        rectP.style.width = `20px`;
+        rectP.style.height = `20px`;
+
+        rectP.style.left = offset + i * 25 + "px";
+        rectP.style.top = offset + j * 25 + "px";
+        parentCanvas.appendChild(rectP);
+        rectPs.push(rectP);
+
+        if (j % 2 === 0) {
+          rectP.style.color = "red";
+        } else {
+          rectP.style.color = "black";
+        }
+      }
+    // }
+  //   aniRef = window.requestAnimationFrame(animate);
+  // }
+  // //add event listener to the button
+  // button.addEventListener("click", animationHandler);
+
+  // function animationHandler(){
+  //   this.textContent = "CLICK";
+  //     console.log("click");
+  // }
+
+  // function animate(){
+
   }
+  }
+  
+
+    
+
   /**************** ANI B ************************************ */
   /** PUT ALL YOUR CODE FOR ANIMATION B INSIDE  HERE */
   /**************** ANI B ************************************ */
