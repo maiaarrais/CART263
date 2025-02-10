@@ -88,58 +88,88 @@ function setup_B() {
    * remember you can define other functions inside....
    * Do not change any code above or the HTML markup.
    * **/
-
   function aniA(parentCanvas) {
     console.log("in A");
-    //create a button element
+  
+    // Create a button element
     let button = document.createElement("div");
     button.classList.add("TEAM_B_box");
     button.textContent = "CLICK";
     parentCanvas.appendChild(button);
-
-    //call to setup the animation before running
-    // setupAnimation();
-
-    let rectPs = []; //empty array of circles
-
-    //offset
-    let offset = 40;
-
-    // function setupAnimation() {
-    //making the grid 
-    for (let i = 0; i < 13; i++) {
-      for (let j = 0; j < 13; j++) {
-        let rectP = document.createElement("p");
-        rectP.classList.add("TEAM_B_rect");
-        rectP.style.width = `20px`;
-        rectP.style.height = `20px`;
-
-        rectP.style.left = offset + i * 25 + "px";
-        rectP.style.top = offset + j * 25 + "px";
-        parentCanvas.appendChild(rectP);
-        rectPs.push(rectP);
-
-        if (j % 2 === 0) {
-          rectP.style.color = "red";
-        } else {
-          rectP.style.color = "black";
+  
+    let rectPs = []; // 2D Array to store rectangles
+    let offset = 40; // Offset for positioning
+    let step = 0; // Keeps track of which row/column to change
+    let mode = "row"; // Start with rows, then switch to columns
+    let activeRects = []; // Store currently active elements
+    let animationInterval; // Store animation loop
+  
+    const colors = ["red", "blue", "green", "yellow", "purple", "orange"];
+    let colorIndex = 0;
+  
+    // Function to set up the grid of rectangles
+    function setupAnimation() {
+      for (let i = 0; i < 13; i++) {
+        rectPs[i] = []; // Initialize each row
+        for (let j = 0; j < 13; j++) {
+          let rectP = document.createElement("p");
+          rectP.classList.add("TEAM_B_rect");
+          rectP.style.width = `20px`;
+          rectP.style.height = `20px`;
+          rectP.style.position = "absolute";
+          rectP.style.left = offset + i * 25 + "px";
+          rectP.style.top = offset + j * 25 + "px";
+  
+          parentCanvas.appendChild(rectP);
+          rectPs[i].push(rectP);
         }
       }
-    // }
-  //   aniRef = window.requestAnimationFrame(animate);
-  // }
-  // //add event listener to the button
-  // button.addEventListener("click", animationHandler);
-
-  // function animationHandler(){
-  //   this.textContent = "CLICK";
-  //     console.log("click");
-  // }
-
-  // function animate(){
-
+    }
+  
+    // Function to animate the selected row/column continuously
+    function startAnimation(rects) {
+      // Stop the previous animation
+      if (animationInterval) clearInterval(animationInterval);
+      
+      activeRects = rects; // Store currently animated elements
+      let newColor = colors[colorIndex]; // Get the next color
+  
+      // Start animation loop
+      animationInterval = setInterval(() => {
+        activeRects.forEach((rectP) => {
+          rectP.classList.toggle("pop-animation"); // Toggle animation
+          rectP.style.backgroundColor = newColor;
+        });
+      }, 500); // Adjust for desired speed
+    }
+  
+    // Function to handle button clicks
+    function animationHandler() {
+      // Reset previously active rectangles
+      activeRects.forEach((rectP) => rectP.classList.remove("pop-animation"));
+  
+      let newRects = mode === "row" ? rectPs[step] : rectPs.map((row) => row[step]);
+  
+      startAnimation(newRects); // Start new animation
+  
+      // Cycle to the next color
+      colorIndex = (colorIndex + 1) % colors.length;
+  
+      // Move to the next row/column
+      step++;
+      if (step >= 13) {
+        step = 0;
+        mode = mode === "row" ? "col" : "row"; // Switch between row & column
+      }
+    }
+  
+    // Add event listener to the button
+    button.addEventListener("click", animationHandler);
+  
+    // Call setupAnimation to initialize the grid
+    setupAnimation();
   }
-  }
+  
   
 
     
@@ -210,4 +240,4 @@ function setup_B() {
     window.addEventListener("keydown", windowKeyDownRef);
     window.addEventListener("keyup", windowKeyUpRef);
   }
-}
+  }

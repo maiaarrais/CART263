@@ -115,6 +115,21 @@ body{
     margin: 4px;
 
   }
+  .pop-animation {
+    animation: pop 0.1s ease-out;
+  }
+  
+  @keyframes pop {
+    0% {
+      transform: scale(0.1);
+    }
+    50% {
+      transform: scale(0.15);
+    }
+    100% {
+      transform: scale(0.25);
+    }
+  }
 
   .TEAM_B_rect{
   background-color: rgb(30, 180, 155);
