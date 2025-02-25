@@ -39,3 +39,17 @@ body{
     position:absolute;
     border-style:solid;
 }
+
+/*flower e style*/
+
+.flower_e {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flower_e .petal {
+    position: absolute;
+    box-shadow: inset 0px 0px 5px rgb(211, 26, 128);
+}
+

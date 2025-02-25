@@ -46,29 +46,34 @@ let garden = {
     garden.grass.grassDiv.style.background = `rgb(${garden.grass.grassColor.r},${garden.grass.grassColor.g},${garden.grass.grassColor.b})`;
     document.getElementsByTagName("main")[0].appendChild(garden.grass.grassDiv);
 
-    //create some flowers
-    for (let i = 0; i < garden.numFlowers; i++) {
-        // Create variables for our arguments for clarity
-        let x = Math.random() * (window.innerWidth);
-        let y = Math.random() * 120;
-        let size = Math.random() * 30 + 10;
-        let stemLength = Math.random() * 50 + 20;
-        let petalColor = {
-          r: parseInt(Math.random() * 155) + 100,
-          g: parseInt(Math.random() * 155) + 100,
-          b: parseInt(Math.random() * 155) + 100,
-        };
-  
-        // Create a new flower using the arguments
-        let flower = new Flower(x, y, size, stemLength, petalColor);
-        // Add the flower to the array of flowers
-        garden.flowers.push(flower);
-      }
 
-      for (let i = 0; i < garden.numFlowers; i++) {
-        // Add the flower to the array of flowers
-        garden.flowers[i].renderFlower();
+    for (let i = 0; i < garden.numFlowers; i++) {
+      let x = Math.random() * window.innerWidth; 
+      let y = Math.random() * 120;; // Keep flowers near the grass
+      let size = Math.random() * 30 + 10;
+      let stemLength = Math.random() * 50 + 20;
+      let petalColor = {
+          r: Math.floor(Math.random() * 155) + 100,
+          g: Math.floor(Math.random() * 155) + 100,
+          b: Math.floor(Math.random() * 155) + 100,
+      };
+  
+      // Randomly decide whether to create a Flower or FlowerE
+      let flower;
+      if (Math.random() < 0.5) {  
+          flower = new Flower(x, y, size, stemLength, petalColor);
+      } else {
+          flower = new Flower_e(x, y, size, stemLength, petalColor);
       }
+  
+      garden.flowers.push(flower);
+  }
+  
+  // Render all flowers
+  for (let flower of garden.flowers) {
+      flower.renderFlower();
+  }
+  
   }
   createAndRenderTheGarden();
   window.addEventListener("keydown", function handleKeyDown(event) {
