@@ -57,5 +57,27 @@ class Flower_e {
         flowerContainer.appendChild(center);
 
         document.getElementsByTagName("main")[0].appendChild(flowerContainer);
+
+         // Add click event to change color
+       flowerContainer.addEventListener("click", () => {
+        this.changeColor(flowerContainer);
+    });
+
+    document.body.appendChild(flowerContainer);
+    }
+    
+    changeColor(flowerContainer) {
+        // Generate new random color
+        let newColor = {
+            r: Math.floor(Math.random() * 155) + 100,
+            g: Math.floor(Math.random() * 155) + 100,
+            b: Math.floor(Math.random() * 155) + 100,
+        };
+
+        // Update petal colors
+        let petals = flowerContainer.getElementsByClassName("petal");
+        for (let petal of petals) {
+            petal.style.backgroundColor = `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
+        }
     }
 }

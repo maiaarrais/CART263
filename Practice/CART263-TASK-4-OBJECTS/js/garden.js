@@ -46,7 +46,9 @@ let garden = {
     garden.grass.grassDiv.style.background = `rgb(${garden.grass.grassColor.r},${garden.grass.grassColor.g},${garden.grass.grassColor.b})`;
     document.getElementsByTagName("main")[0].appendChild(garden.grass.grassDiv);
 
+    let flowerCount = 0; // Initialize flower counter for keeping in mind flower count. 
 
+//add random flowers
     for (let i = 0; i < garden.numFlowers; i++) {
       let x = Math.random() * window.innerWidth; 
       let y = Math.random() * 120;; // Keep flowers near the grass
@@ -65,14 +67,35 @@ let garden = {
       } else {
           flower = new Flower_e(x, y, size, stemLength, petalColor);
       }
-  
       garden.flowers.push(flower);
+      flowerCount++; // Increment count
+      console.log(`Flower ${flowerCount} added: ${flower.constructor.name}`);
   }
-  
-  // Render all flowers
-  for (let flower of garden.flowers) {
-      flower.renderFlower();
-  }
+
+  //add exactly 25 Flowers E
+for (let i = 0; i < 25; i++) {  
+  let x = Math.random() * window.innerWidth; 
+  let y = window.innerHeight - 150;
+  let size = Math.random() * 30 + 10;
+  let stemLength = Math.random() * 50 + 20;
+  let petalColor = {
+      r: Math.floor(Math.random() * 155) + 100,
+      g: Math.floor(Math.random() * 155) + 100,
+      b: Math.floor(Math.random() * 155) + 100,
+  };
+
+  let flower_e = new Flower_e(x, y, 10, stemLength, petalColor); 
+  garden.flowers.push(flower_e);
+  flowerCount++; // Increment count
+  console.log(`Flower ${flowerCount} added: FlowerE`);
+}
+
+// Render all flowers
+console.log(`Total flowers in garden: ${flowerCount}`);
+for (let flower of garden.flowers) {
+  flower.renderFlower();
+}
+
   
   }
   createAndRenderTheGarden();
