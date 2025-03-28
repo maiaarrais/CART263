@@ -3,6 +3,7 @@
 2. word transformations: converts the words 20% of the time to uppercase letters, 20% of the time surrounds the word with asterisks and the rest stays as is.
 3. random/occasional poetic transitions to add some variety 
 4. added colors and titles
+5. Output structure: The words are outputted in different ways by randomizing their position and their font giving variety. 
 */
 
 window.onload = run;
@@ -23,16 +24,6 @@ function run() {
 
   // Reset functionality
   document.querySelector("#resetButton").addEventListener("click", resetPoem);
-
-  function resetPoem() {
-    // Reset all elements to initial state
-    document.querySelector("#stepOneButton").style.display = 'block';
-    document.querySelector("#inputDiv").style.display = 'none';
-    document.querySelector("#rainbow_text").textContent = '';
-    document.querySelector("#phrase").value = '';
-    document.querySelector("#output").textContent = '';
-    document.querySelector("#output").style.display = 'none';
-  }
 
   /****** PART A:: FETCH */  
   async function fetchText() {
@@ -155,14 +146,6 @@ function run() {
     // Trim any extra whitespace and add final flourish
     poem_sentence = poem_sentence.trim() + '.';
 
-    // Display the generated poem with creative styling
-    const outputElement = document.querySelector("#output");
-    outputElement.textContent = poem_sentence;
-    outputElement.style.display = 'block';
-    outputElement.style.color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-    outputElement.style.fontStyle = 'italic';
-    outputElement.style.textShadow = '1px 1px 2px rgba(0,0,0,0.1)';
-
     // Run Part D 
     runPartD(poem_sentence);
   }
@@ -174,39 +157,140 @@ function run() {
     const complexityScore = Math.floor(Math.random() * 10) + 1; // Random complexity 1-10
 
     console.log("Poem generated:", poem_sentence);
-    console.log(`Poetic Metrics: Word Count: ${wordCount}`);
+    console.log(`Word Count: ${wordCount}`);
+
+    document.getElementById("output").style.display = "block";
+
+    // Create scattered visualization
+    createScatteredVisualization(poem_sentence);
   }
+
+  function createScatteredVisualization(poemText) {
+    // Remove any existing visualization
+    const existingViz = document.querySelector("#poem-visualization");
+    if (existingViz) {
+        existingViz.remove();
+    }
+
+    // Create SVG container
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("id", "poem-visualization");
+    svg.setAttribute("width", "100%");
+    svg.setAttribute("height", "500");
+    svg.style.backgroundColor = 'rgba(240,240,240,0.5)';
+
+    // Font choices for variety
+    const fonts = [
+        'Arial', 
+        'Courier New', 
+        'Georgia', 
+        'Verdana', 
+        'Palatino Linotype', 
+        'Bookman Old Style'
+    ];
+
+    // Split poem into words 
+    const words = poemText.split(/\s+/);
+    const svgWidth = window.innerWidth * 0.9;
+    const svgHeight = 500;
+
+    // Function to get random position
+    function getRandomPosition(word, fontSize) {
+      const tempText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      tempText.setAttribute("font-size", `${fontSize}px`);
+      tempText.setAttribute("font-family", fonts[Math.floor(Math.random() * fonts.length)]);
+      tempText.textContent = word;
+      
+      document.body.appendChild(tempText);
+      const wordWidth = tempText.getBBox().width;
+      const wordHeight = tempText.getBBox().height;
+      document.body.removeChild(tempText);
+
+        const x = Math.random() * (svgWidth - wordWidth);
+        const y = Math.random() * (svgHeight - wordHeight);
+
+        return {x,y};
+  
+    }
+
+    // Create words as scattered SVG text elements
+    words.forEach(word => {
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+            // Randomize word properties
+            const fontSize = Math.floor(Math.random() * 30 + 16);
+            const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+            const font = fonts[Math.floor(Math.random() * fonts.length)];
+            const position = getRandomPosition(word, fontSize);
+
+            // Set text attributes
+            text.setAttribute("x", position.x);
+            text.setAttribute("y", position.y);
+            text.setAttribute("font-size", `${fontSize}px`);
+            text.setAttribute("font-family", font);
+            text.setAttribute("fill", color);
+            text.setAttribute("opacity", "0.8");
+
+            // Add word content
+            text.textContent = word;
+
+            // Interactivity: hover and animation effects
+            text.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+            text.addEventListener("mouseover", () => {
+                text.style.transform = "scale(1.5) rotate(10deg)";
+                text.setAttribute("opacity", "1");
+            });
+
+            text.addEventListener("mouseout", () => {
+                text.style.transform = "scale(1) rotate(0deg)";
+                text.setAttribute("opacity", "0.8");
+            });
+
+            // Add to SVG
+            svg.appendChild(text);
+        });
+
+    // Add SVG to document
+    const outputContainer = document.querySelector("#output");
+    outputContainer.appendChild(svg);
+}
 
 
    /****** PART E:: RESET  */
    function resetPoem() {
     // Reset stepOneButton to visible
-    document.querySelector("#stepOneButton").style.display = 'block';
+  document.querySelector("#stepOneButton").style.display = 'block';
 
-    // Hide input div
-    document.querySelector("#inputDiv").style.display = 'none';
+  // Hide input div
+  document.querySelector("#inputDiv").style.display = 'none';
 
-    // Clear rainbow text
-    document.querySelector("#rainbow_text").textContent = '';
+  // Clear rainbow text
+  const rainbowTextElement = document.querySelector("#rainbow_text");
+  rainbowTextElement.textContent = '';
 
-    // Clear any previous title
-    const existingTitle = document.querySelector("#rainbow_text").previousElementSibling;
-    if (existingTitle && existingTitle.tagName === 'H2') {
-      existingTitle.remove();
-    }
+  // Clear any previous title
+  const existingTitle = rainbowTextElement.previousElementSibling;
+  if (existingTitle && existingTitle.tagName === 'H2') {
+    existingTitle.remove();
+  }
 
-    // Clear phrase input
-    document.querySelector("#phrase").value = '';
+  // Clear phrase input
+  document.querySelector("#phrase").value = '';
 
-    // Hide and clear output
-    const outputElement = document.querySelector("#output");
-    outputElement.textContent = '';
-    outputElement.style.display = 'none';
+  // Clear output and visualization
+  const outputElement = document.querySelector("#output");
+  outputElement.textContent = '';
+  
+  // Clear visualization
+  const visualization = document.querySelector("#poem-visualization");
+  if (visualization) {
+    visualization.remove();
+  }
 
-    // Remove any event listeners 
-    const produceButton = document.querySelector("#produce-poem");
-    const oldButton = produceButton.cloneNode(true);
-    produceButton.parentNode.replaceChild(oldButton, produceButton);
+  // Remove any event listeners 
+  const produceButton = document.querySelector("#produce-poem");
+  const oldButton = produceButton.cloneNode(true);
+  produceButton.parentNode.replaceChild(oldButton, produceButton);
   }
 } //window onload
 
