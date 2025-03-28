@@ -4,6 +4,7 @@
 3. random/occasional poetic transitions to add some variety 
 4. added colors and titles
 5. Output structure: The words are outputted in different ways by randomizing their position and their font giving variety. 
+6. displays the new poem completely and then displays random letters found in the new poem and when you hover over them some movement happens. 
 */
 
 window.onload = run;
@@ -96,7 +97,7 @@ function run() {
     const poeticTransitions = [
       "...and then...",
       "suddenly,",
-      "whispered,",
+      "continue,",
       "thank you, next",
       "a few hundred years later"
     ];
@@ -126,6 +127,14 @@ function run() {
         if (matchingWords.length > 0) {
           const selectedWord = matchingWords[Math.floor(Math.random() * matchingWords.length)];
           foundWords.push(selectedWord);
+        } else {
+          // Log when no match is found
+          console.log(`No match for letter '${word[i]}' in word '${word}'.`);
+          
+          // Fallback: Select a random word if no match is found
+          const fallbackWord = rainbow_words[Math.floor(Math.random() * rainbow_words.length)];
+          console.log(`Fallback word selected: ${fallbackWord}`);
+          foundWords.push(fallbackWord);
         }
       }
 
@@ -154,16 +163,30 @@ function run() {
   function runPartD(poem_sentence) {
     // Additional creative touch: Word count and complexity analysis
     const wordCount = poem_sentence.split(/\s+/).length;
-    const complexityScore = Math.floor(Math.random() * 10) + 1; // Random complexity 1-10
 
     console.log("Poem generated:", poem_sentence);
     console.log(`Word Count: ${wordCount}`);
 
     document.getElementById("output").style.display = "block";
 
+    // Print the full poem first
+    printFullPoem(poem_sentence);
+
     // Create scattered visualization
     createScatteredVisualization(poem_sentence);
   }
+
+  // Function to print full poem
+function printFullPoem(poemText) {
+  const outputContainer = document.querySelector("#output");
+  const fullPoemElement = document.createElement("div");
+  fullPoemElement.textContent = poemText;
+  fullPoemElement.style.fontFamily = 'Arial, sans-serif';
+  fullPoemElement.style.fontSize = '20px';
+  fullPoemElement.style.marginBottom = '20px';
+  fullPoemElement.style.whiteSpace = 'pre-wrap'; // Preserve formatting of poem
+  outputContainer.appendChild(fullPoemElement);
+}
 
   function createScatteredVisualization(poemText) {
     // Remove any existing visualization
@@ -194,34 +217,33 @@ function run() {
     const svgWidth = window.innerWidth * 0.9;
     const svgHeight = 500;
 
-    // Function to get random position
-    function getRandomPosition(word, fontSize) {
-      const tempText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      tempText.setAttribute("font-size", `${fontSize}px`);
-      tempText.setAttribute("font-family", fonts[Math.floor(Math.random() * fonts.length)]);
-      tempText.textContent = word;
-      
-      document.body.appendChild(tempText);
-      const wordWidth = tempText.getBBox().width;
-      const wordHeight = tempText.getBBox().height;
-      document.body.removeChild(tempText);
+   // Function to get random position that ensures the word stays within bounds
+  // Function to get random position that ensures the word stays within bounds
+function getRandomPosition() {
+  // Ensure words stay within the canvas boundaries
+  const maxX = svgWidth; // No need to subtract the word width, just use full width
+  const maxY = svgHeight; // No need to subtract the word height, just use full height
 
-        const x = Math.random() * (svgWidth - wordWidth);
-        const y = Math.random() * (svgHeight - wordHeight);
+  const x = Math.random() * maxX; // Get a random X position within canvas width
+  const y = Math.random() * maxY; // Get a random Y position within canvas height
 
-        return {x,y};
-  
-    }
-
+  return {x, y};
+}
     // Create words as scattered SVG text elements
     words.forEach(word => {
+      
+      // Split each word into individual letters
+      const letters = word.split('');
+
+      // Create each letter as a scattered SVG text element
+      letters.forEach(letter => {
             const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
 
             // Randomize word properties
             const fontSize = Math.floor(Math.random() * 30 + 16);
             const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
             const font = fonts[Math.floor(Math.random() * fonts.length)];
-            const position = getRandomPosition(word, fontSize);
+            const position = getRandomPosition();
 
             // Set text attributes
             text.setAttribute("x", position.x);
@@ -232,7 +254,7 @@ function run() {
             text.setAttribute("opacity", "0.8");
 
             // Add word content
-            text.textContent = word;
+            text.textContent = letter;
 
             // Interactivity: hover and animation effects
             text.style.transition = "transform 0.3s ease, opacity 0.3s ease";
@@ -249,6 +271,7 @@ function run() {
             // Add to SVG
             svg.appendChild(text);
         });
+    });
 
     // Add SVG to document
     const outputContainer = document.querySelector("#output");
@@ -280,6 +303,7 @@ function run() {
   // Clear output and visualization
   const outputElement = document.querySelector("#output");
   outputElement.textContent = '';
+  
   
   // Clear visualization
   const visualization = document.querySelector("#poem-visualization");
