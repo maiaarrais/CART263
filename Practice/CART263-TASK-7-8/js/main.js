@@ -65,10 +65,10 @@ fetch('data/iris.json')
         div.style.fontSize = `${Math.max(width / 5, 10)}px`; // Dynamic font size, minimum 10px
         div.style.textAlign = 'center';
         div.style.overflow = 'hidden'; // Prevent text overflow
-        div.style.padding = '5px'; // Add padding for better text visibility
+        div.style.padding = '5px'; // 
         div.title = `Species: ${this.species}\nPetal: ${this.petalLength} x ${this.petalWidth}`;
       
-        // Calculate random positions while ensuring the bubble stays within the container
+        // Calculate random positions with bubble staying within the container
         const maxLeft = container.offsetWidth - width;
         const maxTop = container.offsetHeight - height;
         div.style.left = `${Math.random() * maxLeft}px`; // Random horizontal position within bounds
